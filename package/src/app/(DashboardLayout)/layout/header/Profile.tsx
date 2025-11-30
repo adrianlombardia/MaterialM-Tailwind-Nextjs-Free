@@ -14,7 +14,18 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/app/context/AuthContext'
+
 const Profile = () => {
+  const { logout } = useAuth()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    logout()
+    router.push('/auth/login')
+  }
+
   return (
     <div className='relative group/menu ps-15 shrink-0'>
       <DropdownMenu>
@@ -56,8 +67,12 @@ const Profile = () => {
           <DropdownMenuSeparator className='my-2' />
 
           <div className='px-4'>
-            <Button variant='outline' asChild className='w-full rounded-full'>
-              <Link href='/auth/login'>Logout</Link>
+            <Button
+              variant='outline'
+              className='w-full rounded-full'
+              onClick={handleLogout}
+            >
+              Logout
             </Button>
           </div>
         </DropdownMenuContent>

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './css/globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import { AuthProvider } from './context/AuthContext'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,18 @@ export default function RootLayout({
     <html lang='en' suppressHydrationWarning>
       <head>
         <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
-        {/* {typeof window !== 'undefined' && <ThemeModeScript />} */}
       </head>
-      <body className={`${inter.className}`}>
+      <body className={inter.className}>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
           enableSystem
-          disableTransitionOnChange>
-          {children}
+          disableTransitionOnChange
+        >
+          {/* ⬇️ Agregas el proveedor de autenticación envolviendo TODO */}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
